@@ -14,8 +14,8 @@ router.post('/google', (req, res) => {
       console.log(error);
     } else {
       if (results.length == 0) {
-        let insertUserQuery = 'INSERT INTO user(email, password, name, height, width) VALUES (?, 06071998, ?, ?, ?, ?)';
-        let insertUserItems = [req.body.email, req.body.name, req.body.height, req.body.width];
+        let insertUserQuery = 'INSERT INTO user(email, password, name, height, width) VALUES (?, ?, ?, ?, ?)';
+        let insertUserItems = [req.body.email, "06071998", req.body.name, req.body.height, req.body.width];
 
         db.query(insertUserQuery, insertUserItems, (error, results, fields) => {
           if (error) {
