@@ -7,13 +7,15 @@ router.post('/google', (req, res) => {
   let seletUserQuery = 'SELECT * FROM user WHERE email=?';
   let selectUserItems = [req.body.email];
 
+  console.log(req.body);
+
   db.query(seletUserQuery, selectUserItems, (error, results, fields) => {
     if (error) {
       console.log(error);
     } else {
       if (results.length == 0) {
-        let insertUserQuery = 'INSERT INTO user(email, password, name, height, width) VALUES (?, 06071998, ?, 100, 100)';
-        let insertUserItems = [req.body.email, req.body.name];
+        let insertUserQuery = 'INSERT INTO user(email, password, name, height, width) VALUES (?, 06071998, ?, ?, ?, ?)';
+        let insertUserItems = [req.body.email, req.body.name, req.body.height, req.body.width];
 
         db.query(insertUserQuery, insertUserItems, (error, results, fields) => {
           if (error) {
@@ -22,13 +24,13 @@ router.post('/google', (req, res) => {
             res.status(200).json({
               status: 1,
               message: 'success login google',
-              data: {
+              data: [{
                 id: results.insertId,
                 email: req.body.email,
                 name: req.body.name, 
-                height: 100,
-                width: 100,
-              }
+                height: req.body.height,
+                width: req.body.width,
+              }],
             })
           }
         })
@@ -36,7 +38,7 @@ router.post('/google', (req, res) => {
         res.status(200).json({
           status: 1,
           message: 'success login google',
-          data: results[0],
+          data: results,
         })
       }
     }
