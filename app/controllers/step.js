@@ -10,11 +10,13 @@ router.post('/', function(req, res) {
   db.query(query, items, function(error, results, fields) {
     if (error) {
       res.status(400).json({
-        message: error
+        status: 0,
+        message: 'failed to insert step',
       })
     } else {
       res.status(200).json({
-        message: 'success'
+        status: 1,
+        message: 'success insert step',
       })
     }
   })
@@ -28,7 +30,11 @@ router.get('/', function(req, res) {
     if (error) {
       res.status(400).json(error)
     } else {
-      res.status(200).json(results)
+      res.status(200).json({
+        data: results,
+        status: 1,
+        message: 'success get step count',
+      })
     }
   })
 })

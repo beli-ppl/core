@@ -9,7 +9,8 @@ var User = require('./app/models/User.js');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/step_counter', require('./app/controllers/step_counter.js'));
+app.use('/step', require('./app/controllers/step.js'));
+app.use('/user', require('./app/controllers/user'));
 
 var port = process.env.PORT || 3000;
 
