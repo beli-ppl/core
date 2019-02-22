@@ -3,12 +3,13 @@ require('dotenv').config();
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
-var Database = require('./app/database');
 var Step = require('./app/models/Step.js');
 var User = require('./app/models/User.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use('/step_counter', require('./app/controllers/step_counter.js'));
 
 var port = process.env.PORT || 3000;
 
@@ -33,12 +34,5 @@ router.get('/coba', (req, res) => {
   })
 })
 
-router.post('/step', function(req, res) {
-  db = new Database();
-  step = new Step(req.body.user_id, req.body.timestamp, req.body.count_step);
-  res.json(db.insertStepCount(step));
-})
-
-app.use('/api', router);
 app.listen(port);
 console.log('Magic happens on port ' + port);
